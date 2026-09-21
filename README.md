@@ -1,7 +1,7 @@
 # ✨ My AI — Local Multimodal AI Assistant
 
 <p align="center">
-  <img src="my-ai-ui.png" alt="My AI local multimodal AI assistant UI" width="100%">
+  <img src="[my-ai-ui.png](https://github.com/Alexjmathew7/CHAT_APPLICATION/blob/main/Screenshot%20from%202026-09-21%2014-22-19.png)" alt="My AI local multimodal AI assistant UI" width="100%">
 </p>
 
 <p align="center">
