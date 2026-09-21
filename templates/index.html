@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="My AI - Private local AI assistant powered by LM Studio"
+    >
+
+    <title>MY AI</title>
+
+
+    <!-- ================================================== -->
+    <!-- MARKDOWN -->
+    <!-- ================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"
+    ></script>
+
+
+    <!-- ================================================== -->
+    <!-- HIGHLIGHT.JS -->
+    <!-- ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css"
+    >
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"
+    ></script>
+
+
+    <!-- ================================================== -->
+    <!-- APP CSS -->
+    <!-- ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- ================================================== -->
+    <!-- SIDEBAR -->
+    <!-- ================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- Brand -->
+
+        <div class="sidebar-header">
+
+            <div class="brand-icon">
+                ✦
+            </div>
+
+            <div class="brand-info">
+
+                <div class="brand-name">
+                    My AI
+                </div>
+
+                <div class="brand-status">
+
+                    <span class="status-dot"></span>
+
+                    Local AI
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================== -->
+        <!-- NEW CHAT -->
+        <!-- ================================================== -->
+
+        <button
+            type="button"
+            class="new-chat"
+            onclick="newChat()"
+        >
+
+            <span class="new-chat-icon">
+                ＋
+            </span>
+
+            <span>
+                New chat
+            </span>
+
+        </button>
+
+
+        <!-- ================================================== -->
+        <!-- CHAT HISTORY -->
+        <!-- ================================================== -->
+
+        <div class="history-label">
+            CHAT HISTORY
+        </div>
+
+
+        <div
+            id="conversationList"
+            class="conversation-list"
+        >
+
+            <div class="history-loading">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-spacer"></div>
+
+
+        <!-- ================================================== -->
+        <!-- USER -->
+        <!-- ================================================== -->
+
+        <div class="user-section">
+
+            <div class="user-avatar">
+
+                {{ (username or 'U')[0]|upper }}
+
+            </div>
+
+
+            <div class="user-info">
+
+                <div class="username">
+                    {{ username }}
+                </div>
+
+                <div class="model-name">
+                    Multimodel Support
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-button"
+                title="Logout"
+                aria-label="Logout"
+            >
+                ↪
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================================================== -->
+    <!-- MAIN -->
+    <!-- ================================================== -->
+
+    <main class="main">
+
+
+        <!-- ================================================== -->
+        <!-- TOP BAR -->
+        <!-- ================================================== -->
+
+        <header class="topbar">
+
+
+            <!-- Mobile Brand -->
+
+            <div class="mobile-brand">
+
+                <div class="brand-icon">
+                    ✦
+                </div>
+
+                <span>
+                    My AI
+                </span>
+
+            </div>
+
+
+            <!-- Model -->
+
+            <div class="model-display">
+
+                <span class="model-dot"></span>
+
+                <span>
+                    Multimodel Support
+                </span>
+
+                <span class="local-badge">
+                    LOCAL
+                </span>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="topbar-actions">
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    onclick="newChat()"
+                    title="New chat"
+                    aria-label="New chat"
+                >
+                    ＋
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================================================== -->
+        <!-- CHAT -->
+        <!-- ================================================== -->
+
+        <section
+            id="chat"
+            class="chat"
+            aria-live="polite"
+        >
+
+
+            <!-- ================================================== -->
+            <!-- WELCOME -->
+            <!-- ================================================== -->
+
+            <div
+                id="welcome"
+                class="welcome"
+            >
+
+                <div class="welcome-icon">
+                    ✦
+                </div>
+
+
+                <h1>
+                    How can I help you?
+                </h1>
+
+
+                <p>
+                    Your private AI assistant running locally
+                    with LM Studio.
+                </p>
+
+
+                <!-- ================================================== -->
+                <!-- SUGGESTIONS -->
+                <!-- ================================================== -->
+
+                <div class="suggestions">
+
+
+                    <button
+                        type="button"
+                        onclick="useSuggestion(this)"
+                    >
+
+                        <span class="suggestion-icon">
+                            💡
+                        </span>
+
+                        <span>
+                            Explain quantum computing simply
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="useSuggestion(this)"
+                    >
+
+                        <span class="suggestion-icon">
+                            💻
+                        </span>
+
+                        <span>
+                            Write a Python program
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="useSuggestion(this)"
+                    >
+
+                        <span class="suggestion-icon">
+                            🚀
+                        </span>
+
+                        <span>
+                            Help me build a project
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="useSuggestion(this)"
+                    >
+
+                        <span class="suggestion-icon">
+                            🧠
+                        </span>
+
+                        <span>
+                            Tell me something interesting
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- COMPOSER AREA -->
+        <!-- ================================================== -->
+
+        <div class="composer-area">
+
+
+            <!-- ================================================== -->
+            <!-- IMAGE PREVIEW -->
+            <!-- ================================================== -->
+
+            <div
+                id="imagePreview"
+                class="image-preview"
+            ></div>
+
+
+            <!-- ================================================== -->
+            <!-- DOCUMENT PREVIEW -->
+            <!-- ================================================== -->
+
+            <div
+                id="documentPreview"
+                class="document-preview"
+            ></div>
+
+
+            <!-- ================================================== -->
+            <!-- COMPOSER -->
+            <!-- ================================================== -->
+
+            <div class="composer">
+
+
+                <!-- ================================================== -->
+                <!-- IMAGE BUTTON -->
+                <!-- ================================================== -->
+
+                <button
+                    type="button"
+                    class="attach-button image-button"
+                    onclick="
+                        document
+                        .getElementById('imageInput')
+                        .click()
+                    "
+                    title="Upload image"
+                    aria-label="Upload image"
+                >
+
+                    📷
+
+                </button>
+
+
+                <!-- ================================================== -->
+                <!-- IMAGE INPUT -->
+                <!-- ================================================== -->
+
+                <input
+                    id="imageInput"
+                    type="file"
+                    accept="image/*"
+                    hidden
+                >
+
+
+                <!-- ================================================== -->
+                <!-- DOCUMENT BUTTON -->
+                <!-- ================================================== -->
+
+                <button
+                    type="button"
+                    class="attach-button document-button"
+                    onclick="
+                        document
+                        .getElementById('documentInput')
+                        .click()
+                    "
+                    title="Attach document or code"
+                    aria-label="Attach document or code"
+                >
+
+                    📎
+
+                </button>
+
+
+                <!-- ================================================== -->
+                <!-- DOCUMENT INPUT -->
+                <!-- ================================================== -->
+
+                <input
+                    id="documentInput"
+                    type="file"
+                    accept="
+                        .pdf,
+                        .txt,
+                        .md,
+                        .csv,
+                        .json,
+                        .docx,
+                        .py,
+                        .js,
+                        .html,
+                        .htm,
+                        .css,
+                        .java,
+                        .c,
+                        .cpp,
+                        .h,
+                        .hpp,
+                        .cs,
+                        .php,
+                        .rb,
+                        .go,
+                        .rs,
+                        .ts,
+                        .tsx,
+                        .jsx,
+                        .sql,
+                        .sh,
+                        .bat,
+                        .xml,
+                        .yaml,
+                        .yml,
+                        .toml,
+                        .ini
+                    "
+                    hidden
+                >
+
+
+                <!-- ================================================== -->
+                <!-- MESSAGE -->
+                <!-- ================================================== -->
+
+                <textarea
+                    id="message"
+                    rows="1"
+                    placeholder="Message My AI..."
+                    autocomplete="off"
+                    spellcheck="true"
+                    aria-label="Message"
+                ></textarea>
+
+
+                <!-- ================================================== -->
+                <!-- SEND -->
+                <!-- ================================================== -->
+
+                <button
+                    id="sendButton"
+                    type="button"
+                    class="send-button"
+                    onclick="sendMessage()"
+                    title="Send"
+                    aria-label="Send message"
+                >
+
+                    ↑
+
+                </button>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- COMPOSER INFO -->
+            <!-- ================================================== -->
+
+            <div class="composer-info">
+
+                <span>
+                    Enter to send
+                </span>
+
+                <span>
+                    Shift + Enter for new line
+                </span>
+
+                <span class="vision-info">
+                    📷 Vision supported
+                </span>
+
+                <span class="document-info">
+                    📎 Documents &amp; code supported
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+<!-- ====================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ====================================================== -->
+
+<script
+    src="{{ url_for('static', filename='app.js') }}"
+></script>
+
+
+</body>
+
+</html>

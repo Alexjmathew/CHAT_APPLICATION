@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MY AI — Sign in</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body class="login-page">
+
+
+    <!-- Background decoration -->
+
+    <div class="login-glow glow-one"></div>
+    <div class="login-glow glow-two"></div>
+
+
+    <main class="auth-container">
+
+
+        <!-- Card -->
+
+        <div class="login-card">
+
+
+            <!-- Logo -->
+
+            <div class="auth-logo">
+                <span>✦</span>
+            </div>
+
+
+            <!-- Heading -->
+
+            <div class="auth-heading">
+
+                <h1>
+                    Welcome back
+                </h1>
+
+                <p>
+                    Sign in to continue to Gemma AI
+                </p>
+
+            </div>
+
+
+            <!-- Error -->
+
+            {% if error %}
+
+            <div class="error-message">
+
+                <span class="error-icon">
+                    !
+                </span>
+
+                <span>
+                    {{ error }}
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- Login form -->
+
+            <form
+                method="POST"
+                class="auth-form"
+            >
+
+
+                <!-- Username -->
+
+                <div class="input-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            @
+                        </span>
+
+                        <input
+                            id="username"
+                            type="text"
+                            name="username"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required
+                            autofocus
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="input-group">
+
+                    <div class="password-label">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                    </div>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ●
+                        </span>
+
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword()"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                >
+
+                    <span>
+                        Sign in
+                    </span>
+
+                    <span class="button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- Register -->
+
+            <div class="auth-divider">
+
+                <span></span>
+
+                <small>
+                    OR
+                </small>
+
+                <span></span>
+
+            </div>
+
+
+            <div class="register-prompt">
+
+                <span>
+                    Don't have an account?
+                </span>
+
+                <a href="/register">
+                    Create one
+                </a>
+
+            </div>
+
+
+            <!-- Local status -->
+
+            <div class="local-status">
+
+                <span class="status-dot"></span>
+
+                <span>
+                    Running locally
+                </span>
+
+                <span class="status-separator">
+                    •
+                </span>
+
+                <span>
+                    LM Studio
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Footer -->
+
+        <footer class="auth-footer">
+
+            <span>
+                ✦ Gemma AI
+            </span>
+
+            <span>
+                Private · Local · Open source
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+    <script>
+
+        function togglePassword() {
+
+            const password =
+                document.getElementById("password");
+
+            const button =
+                document.querySelector(
+                    ".password-toggle"
+                );
+
+
+            if (
+                password.type === "password"
+            ) {
+
+                password.type = "text";
+
+                button.textContent =
+                    "Hide";
+
+            } else {
+
+                password.type = "password";
+
+                button.textContent =
+                    "Show";
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

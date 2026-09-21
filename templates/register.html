@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create account - Gemma AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Dark blue theme CSS */
+        body.login-page {
+            background: linear-gradient(135deg, #1a2a6c 0%, #2a3a8c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-card {
+            background: rgba(25, 35, 65, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(100, 150, 255, 0.1);
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #64b5f6;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #e0f7fa;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 28px;
+        }
+
+        .login-subtitle {
+            color: #bbdefb;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.15);
+            color: #ff8a80;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff5252;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #bbdefb;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #3a5a9a;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background: rgba(15, 25, 55, 0.8);
+            color: #e0f7fa;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #64b5f6;
+            box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.2);
+        }
+
+        .login-button {
+            background: linear-gradient(135deg, #2196f3 0%, #21cbf3 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.5);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-footer {
+            margin-top: 25px;
+            color: #bbdefb;
+            font-size: 14px;
+        }
+
+        .login-footer a {
+            color: #64b5f6;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-footer a:hover {
+            color: #29b6f6;
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .login-card {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body class="login-page">
+    <div class="login-card">
+        <div class="logo">✦</div>
+        <h1>Create account</h1>
+        <p class="login-subtitle">Create your local Gemma AI account</p>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="input-group">
+                <label>Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Choose a username"
+                    required
+                    autofocus
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="At least 6 characters"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-button">
+                Create account
+            </button>
+        </form>
+
+        <div class="login-footer">
+            Already have an account?
+            <a href="/login">Sign in</a>
+        </div>
+    </div>
+</body>
+
+</html>
