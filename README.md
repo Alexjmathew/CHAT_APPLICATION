@@ -456,7 +456,7 @@ my-ai/
 ## 1. Clone the project
 
 ```bash
-git clone <your-repository-url>
+https://github.com/Alexjmathew7/CHAT_APPLICATION
 cd my-ai
 ```
 
